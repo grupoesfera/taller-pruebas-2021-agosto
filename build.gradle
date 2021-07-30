@@ -1,0 +1,55 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.unbroken-dome.test-sets' version '4.0.0'
+	id "org.flywaydb.flyway" version '7.11.3'
+}
+
+group = 'ar.com.grupoesfera'
+version = '1.0'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+testSets {
+	integrationTest
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	integrationTestImplementation 'org.testcontainers:mariadb:1.15.2'
+	integrationTestImplementation 'org.flywaydb:flyway-core:7.11.3'
+	integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+integrationTest {
+	useJUnitPlatform()
+	mustRunAfter test
+}
+
+check {
+	dependsOn integrationTest
+}
+
+flyway {
+	user = 'root'
+	password = 'root'
+	url = 'jdbc:mariadb://localhost:3306/repartir'
+	locations = [ 'filesystem:src/main/db/migration' ]
+}
+
+bootRun {
+	systemProperty "spring.profiles.active", "local"
+}
