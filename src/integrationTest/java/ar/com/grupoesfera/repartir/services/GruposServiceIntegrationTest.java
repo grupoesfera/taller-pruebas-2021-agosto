@@ -1,6 +1,6 @@
 package ar.com.grupoesfera.repartir.services;
 
-import ar.com.grupoesfera.repartir.config.BaseDeDatos;
+import ar.com.grupoesfera.repartir.itest.BaseDeDatosFixture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 class GruposServiceIntegrationTest {
 
     @Autowired
-    BaseDeDatos baseDeDatos;
+    BaseDeDatosFixture baseDeDatos;
 
 
 }

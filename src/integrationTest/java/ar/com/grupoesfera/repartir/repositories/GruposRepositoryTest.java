@@ -1,6 +1,6 @@
 package ar.com.grupoesfera.repartir.repositories;
 
-import ar.com.grupoesfera.repartir.config.BaseDeDatos;
+import ar.com.grupoesfera.repartir.itest.BaseDeDatosFixture;
 import ar.com.grupoesfera.repartir.model.Grupo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,9 +10,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static ar.com.grupoesfera.repartir.itest.Fixture.*;
 
 @SpringBootTest
 @ActiveProfiles("integrationTest")
@@ -22,12 +24,12 @@ class GruposRepositoryTest {
     GruposRepository repository;
 
     @Autowired
-    BaseDeDatos baseDeDatos;
+    BaseDeDatosFixture baseDeDatos;
 
     @BeforeEach
     public void prepararBaseDeDatos() {
 
-        baseDeDatos.inicializar();
+        baseDeDatos.estaVacia();
     }
 
     @Test
@@ -55,13 +57,13 @@ class GruposRepositoryTest {
 
         Grupo grupo = new Grupo();
         grupo.setNombre("Almuerzo");
-        grupo.setMiembros(Arrays.asList("mariano", "juan"));
-        final BigDecimal VALOR_ORIGINAL = BigDecimal.valueOf(21000, 2);
+        grupo.setMiembros(son("mariano", "juan"));
+        final BigDecimal VALOR_ORIGINAL = $(210,0);
         grupo.setTotal(VALOR_ORIGINAL);
         repository.save(grupo);
         final Long ID = grupo.getId();
 
-        final BigDecimal VALOR_ACTUALIZADO = BigDecimal.valueOf(33410, 2);
+        final BigDecimal VALOR_ACTUALIZADO = $(334,10);
         grupo.setTotal(VALOR_ACTUALIZADO);
         repository.save(grupo);
 
@@ -82,12 +84,12 @@ class GruposRepositoryTest {
     private Long dadoQueExisteUnaCuentaConTotalDe210() {
 
         final var ALGUN_NOMBRE = "Almuerzo";
-        final var ALGUN_GRUPO_DE_PERSONAS = Arrays.asList("mariano", "juan");
-        final var TOTAL_ORIGINAL = BigDecimal.valueOf(21000, 2);
+        final var ALGUNOS_MIEMBROS = son("mariano", "juan");
+        final var TOTAL_ORIGINAL = $(210,0);
 
         Grupo grupo = new Grupo();
         grupo.setNombre(ALGUN_NOMBRE);
-        grupo.setMiembros(ALGUN_GRUPO_DE_PERSONAS);
+        grupo.setMiembros(ALGUNOS_MIEMBROS);
         grupo.setTotal(TOTAL_ORIGINAL);
         repository.save(grupo);
         return grupo.getId();
@@ -95,7 +97,7 @@ class GruposRepositoryTest {
 
     private void cuandoCambioElTotalPor334_10YLoGuardoParaCuentaConId(final Long ID) {
 
-        final BigDecimal TOTAL_ACTUALIZADO = BigDecimal.valueOf(33410, 2);
+        final BigDecimal TOTAL_ACTUALIZADO = $(334,10);
 
         Grupo grupo = repository.findById(ID).get();
         grupo.setTotal(TOTAL_ACTUALIZADO);
@@ -104,10 +106,20 @@ class GruposRepositoryTest {
 
     private void entoncesQuedaActualizadoElTotalPor334_10ParaCuentaConId(final Long ID) {
 
-        final var TOTAL_ESPERADO = BigDecimal.valueOf(33410, 2);
+        final var TOTAL_ESPERADO = $(334,10);
 
         Optional<Grupo> resultado = repository.findById(ID);
         assertThat(resultado.isPresent()).isTrue();
         assertThat(resultado.get().getTotal()).isEqualByComparingTo(TOTAL_ESPERADO);
+    }
+
+    @Test
+    public void recuperarTodosLosGruposExistentes() {
+
+        baseDeDatos.existenCuatroGrupos();
+
+        List<Grupo> grupos = repository.findAll();
+
+        assertThat(grupos).as("Grupos recuperados").hasSize(4);
     }
 }

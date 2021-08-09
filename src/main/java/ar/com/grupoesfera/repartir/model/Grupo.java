@@ -2,6 +2,7 @@ package ar.com.grupoesfera.repartir.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +23,7 @@ public class Grupo {
     private String nombre;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "miembro")
     private List<String> miembros;
 
     private BigDecimal total;
@@ -65,7 +67,7 @@ public class Grupo {
         this.total = total;
     }
 
-    public boolean esValido() {
+    public boolean estaFormado() {
 
         return (miembros != null) && (miembros.size() > 1);
     }

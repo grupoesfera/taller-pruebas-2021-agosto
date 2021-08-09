@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/grupos")
+@RequestMapping("/api/grupos")
 public class GruposController {
-
-    @Autowired
-    GruposRepository repository;
 
     @Autowired
     GruposService grupos;

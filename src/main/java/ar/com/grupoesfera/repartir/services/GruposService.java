@@ -27,7 +27,7 @@ public class GruposService {
 
     public Grupo crear(Grupo grupo) {
 
-        if (!grupo.esValido()) {
+        if (!grupo.estaFormado()) {
             throw new GrupoInvalidoException();
         }
 

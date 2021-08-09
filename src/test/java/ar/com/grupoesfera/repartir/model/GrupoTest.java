@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.*;
 class GrupoTest {
 
     @Test
-    void crearGrupoSinParametros() {
+    void crearSinParametros() {
 
         Grupo grupo = new Grupo();
 
@@ -20,7 +20,7 @@ class GrupoTest {
     }
 
     @Test
-    void crearGrupoConId() {
+    void crearConId() {
 
         final Long ID = 153L;
         Grupo grupo = new Grupo(ID);
@@ -32,34 +32,34 @@ class GrupoTest {
     }
 
     @Test
-    void noEsValidoCuandoElGrupoTieneSoloUnMiembro() {
+    void noEstaFormadoCuandoTieneSoloUnMiembro() {
 
         Grupo grupo = new Grupo();
         grupo.setMiembros(Arrays.asList("martin"));
 
-        boolean esValida = grupo.esValido();
+        boolean estaFormado = grupo.estaFormado();
 
-        assertThat(esValida).isFalse();
+        assertThat(estaFormado).isFalse();
     }
 
     @Test
-    void esValidoCuandoElGrupoTieneDosMiembros() {
+    void estaFormadoCuandoTieneDosMiembros() {
 
         Grupo grupo = new Grupo();
         grupo.setMiembros(Arrays.asList("mtolosa", "sdiaz"));
 
-        boolean esValida = grupo.esValido();
+        boolean estaFormado = grupo.estaFormado();
 
-        assertThat(esValida).isTrue();
+        assertThat(estaFormado).isTrue();
     }
 
     @Test
-    void noEsValidoCuandoLosMiembrosSonNulos() {
+    void noEstaFormadoCuandoLosMiembrosSonNulos() {
 
         Grupo grupo = new Grupo();
 
         grupo.setMiembros(null);
 
-        assertThat(grupo.esValido()).isFalse();
+        assertThat(grupo.estaFormado()).isFalse();
     }
 }

@@ -9,9 +9,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
@@ -38,7 +39,7 @@ class GruposServiceTest {
 
         Grupo nuevoGrupo = new Grupo();
         nuevoGrupo.setNombre("Cena");
-        nuevoGrupo.setMiembros(Arrays.asList("claudia", "tomas", "sandra"));
+        nuevoGrupo.setMiembros(asList("claudia", "tomas", "sandra"));
 
         grupos.crear(nuevoGrupo);
 
@@ -46,11 +47,11 @@ class GruposServiceTest {
     }
 
     @Test
-    void crearGrupoLanzaExcepcionSiElGrupoNoEsValido() {
+    void crearGrupoLanzaExcepcionSiElGrupoNoTieneMiembros() {
 
         Grupo grupoInvalidoSinMiembros = new Grupo();
         grupoInvalidoSinMiembros.setNombre("Almuerzo");
-        grupoInvalidoSinMiembros.setMiembros(null);
+        grupoInvalidoSinMiembros.setMiembros(emptyList());
 
         assertThrows(GrupoInvalidoException.class, () -> {
             grupos.crear(grupoInvalidoSinMiembros);
@@ -123,7 +124,7 @@ class GruposServiceTest {
         Grupo grupo = new Grupo();
         grupo.setId(ID);
         grupo.setNombre("Almuerzo");
-        grupo.setMiembros(Arrays.asList("laura", "rodrigo", "marcos", "valeria"));
+        grupo.setMiembros(asList("laura", "rodrigo", "marcos", "valeria"));
         grupo.setTotal(BigDecimal.valueOf(0,2));
 
         return grupo;
@@ -158,7 +159,7 @@ class GruposServiceTest {
         Grupo grupo = new Grupo();
         grupo.setId(ID);
         grupo.setNombre("Viaje");
-        grupo.setMiembros(Arrays.asList("patricia", "guille", "vicky", "luca"));
+        grupo.setMiembros(asList("patricia", "guille", "vicky", "luca"));
         grupo.setTotal(BigDecimal.valueOf(11200,2));
 
         return grupo;
