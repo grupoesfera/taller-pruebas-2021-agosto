@@ -16,6 +16,7 @@ repositories {
 
 testSets {
 	integrationTest
+	manualTest
 }
 
 dependencies {
@@ -29,6 +30,9 @@ dependencies {
 	integrationTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
 	integrationTestImplementation 'net.javacrumbs.json-unit:json-unit:2.27.0'
+
+	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'
+	manualTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 }
 
 test {
@@ -52,5 +56,6 @@ flyway {
 }
 
 bootRun {
-	systemProperty "spring.profiles.active", "local"
+	systemProperty "spring.profiles.active", "manualTest"
+	classpath = sourceSets.manualTest.runtimeClasspath
 }
