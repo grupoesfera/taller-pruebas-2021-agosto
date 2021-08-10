@@ -1,0 +1,12 @@
+<p-dialog header="Vamos a ..." [(visible)]="mostrar" [modal]="true" position="top-left"
+          [closable]="false" [resizable]="false" [draggable]="true">
+  <div class="pl-4 text-5xl font-bold text-left">
+    Repartir
+    <i class="p-4 pi pi-angle-double-left text-5xl"></i>
+  </div>
+  <p-footer>
+    <p-button id="iniciarBienvenidaButton" label="Iniciar" (onClick)="iniciar()"
+              icon="pi pi-check"
+              styleClass="p-button-secondary p-button-lg p-button-rounded"></p-button>
+  </p-footer>
+</p-dialog>

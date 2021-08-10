@@ -22,6 +22,7 @@ import { GruposComponent } from './components/grupos/grupos.component';
 import { GrupoNuevoComponent } from './components/grupo-nuevo/grupo-nuevo.component';
 import { GastoNuevoComponent } from './components/gasto-nuevo/gasto-nuevo.component';
 import { IdentificarGrupoPipe } from './pipes/identificar-grupo.pipe';
+import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
 
 registerLocaleData(localeEs, 'es-AR');
 
@@ -32,6 +33,7 @@ registerLocaleData(localeEs, 'es-AR');
     GrupoNuevoComponent,
     GastoNuevoComponent,
     IdentificarGrupoPipe,
+    BienvenidaComponent,
   ],
   imports: [
     HttpClientModule,
