@@ -2,6 +2,7 @@ package ar.com.grupoesfera.repartir.itest;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 
 @Component
+@Profile("integrationTestWithDB")
 public class BaseDeDatosFixture extends Fixture {
 
     private static final String MIGRATION_PATH = "filesystem:src/main/db/migrations";

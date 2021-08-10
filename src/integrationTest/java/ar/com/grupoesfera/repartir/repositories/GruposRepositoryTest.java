@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.*;
 import static ar.com.grupoesfera.repartir.itest.Fixture.*;
 
 @SpringBootTest
-@ActiveProfiles("integrationTest")
+@ActiveProfiles("integrationTestWithDB")
 class GruposRepositoryTest {
 
     @Autowired
