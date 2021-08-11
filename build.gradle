@@ -16,6 +16,7 @@ repositories {
 
 testSets {
 	integrationTest
+	uiTest
 	manualTest
 }
 
@@ -31,6 +32,9 @@ dependencies {
 	integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
 	integrationTestImplementation 'net.javacrumbs.json-unit:json-unit:2.27.0'
 
+	uiTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+	uiTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+
 	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	manualTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 }
@@ -44,8 +48,14 @@ integrationTest {
 	mustRunAfter test
 }
 
+uiTest() {
+	useJUnitPlatform()
+	mustRunAfter integrationTest
+}
+
 check {
 	dependsOn integrationTest
+	dependsOn uiTest
 }
 
 flyway {
