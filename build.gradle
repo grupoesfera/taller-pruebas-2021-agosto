@@ -17,6 +17,7 @@ repositories {
 testSets {
 	integrationTest
 	uiTest
+	acceptanceTest
 	manualTest
 }
 
@@ -27,14 +28,21 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	integrationTestImplementation 'org.testcontainers:mariadb:1.15.2'
 	integrationTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
 	integrationTestImplementation 'net.javacrumbs.json-unit:json-unit:2.27.0'
+	integrationTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 
 	uiTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 	uiTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
 	uiTestImplementation sourceSets.integrationTest.output
+
+	acceptanceTestImplementation 'io.cucumber:cucumber-java:6.10.4'
+	acceptanceTestImplementation 'io.cucumber:cucumber-junit-platform-engine:6.10.4'
+	acceptanceTestImplementation 'io.cucumber:cucumber-spring:6.10.4'
+	acceptanceTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	acceptanceTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 
 	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	manualTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
@@ -49,14 +57,20 @@ integrationTest {
 	mustRunAfter test
 }
 
-uiTest() {
+uiTest {
 	useJUnitPlatform()
 	mustRunAfter integrationTest
+}
+
+acceptanceTest {
+	useJUnitPlatform()
+	mustRunAfter uiTest
 }
 
 check {
 	dependsOn integrationTest
 	dependsOn uiTest
+	dependsOn acceptanceTest
 }
 
 flyway {
