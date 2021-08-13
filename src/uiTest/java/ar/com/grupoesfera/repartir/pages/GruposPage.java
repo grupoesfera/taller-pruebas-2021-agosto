@@ -2,6 +2,9 @@ package ar.com.grupoesfera.repartir.pages;
 
 import ar.com.grupoesfera.repartir.ui.UITest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class GruposPage extends UITest.PageObject {
 
@@ -21,26 +24,33 @@ public class GruposPage extends UITest.PageObject {
 
     public GruposPage clickEnCrear() {
 
-        this.driver().findElement(By.ById.id("crearGruposButton")).click();
+        this.driver().findElement(By.id("crearGruposButton")).click();
 
         return this;
     }
 
     public GruposPage tipearNombre(String nombre) {
 
-        this.driver().findElement(By.ById.id("nombreGrupoNuevoInput")).sendKeys("After Office");
+        this.driver().findElement(By.id("nombreGrupoNuevoInput")).sendKeys(nombre);
         return this;
     }
 
     public GruposPage tipearMiembro(String miembro) {
 
-        this.driver().findElement(By.ById.id("miembrosGrupoNuevoInput")).sendKeys(miembro + "\n");
+        this.driver().findElement(By.id("miembrosGrupoNuevoInput")).sendKeys(miembro + "\n");
         return this;
     }
 
     public GruposPage clickEnGuardar() {
 
-        this.driver().findElement(By.ById.id("guardarGrupoNuevoButton")).click();
+        this.driver().findElement(By.id("guardarGrupoNuevoButton")).click();
         return this;
+    }
+
+    public String leerNotificacion() {
+
+        var wait = new WebDriverWait(this.driver(), 2);
+        var mensajesToast = wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+        return mensajesToast.getText();
     }
 }
