@@ -5,7 +5,7 @@ import ar.com.grupoesfera.repartir.model.Grupo;
 import java.math.BigDecimal;
 import java.util.List;
 
-class GrupoBuilder {
+public class GrupoBuilder {
 
     private Grupo unGrupo = new Grupo();
 
