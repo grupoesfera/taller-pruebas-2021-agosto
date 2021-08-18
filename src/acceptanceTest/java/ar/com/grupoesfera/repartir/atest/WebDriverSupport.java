@@ -35,7 +35,7 @@ public class WebDriverSupport {
         return driver;
     }
 
-    @PreDestroy
+    //@PreDestroy
     public void stop() {
 
         driver.quit();

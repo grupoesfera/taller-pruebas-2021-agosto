@@ -1,6 +1,5 @@
 package ar.com.grupoesfera.repartir;
 
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,9 +13,8 @@ public class BienvenidaSteps extends CucumberSteps {
     @Then("el usuario accede a la aplicación")
     public void elUsuarioAccedeALaAplicacion() {
 
-        this.driver.navigate().to(url("/"));
+        driver.navigate().to(url("/"));
     }
-
 
     @Then("se muestra el mensaje de bienvenida")
     public void seMuestraElMensajeDeBienvenida() {
@@ -31,7 +29,7 @@ public class BienvenidaSteps extends CucumberSteps {
     @Given("que el usuario accedió a la aplicación")
     public void queElUsuarioAccedioALaAplicacion() {
 
-        this.driver.navigate().to(url("/"));
+        driver.navigate().to(url("/"));
     }
 
     @When("decidió iniciar")

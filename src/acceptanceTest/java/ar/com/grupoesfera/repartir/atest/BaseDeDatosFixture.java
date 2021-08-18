@@ -33,4 +33,12 @@ public class BaseDeDatosFixture {
         flyway.clean();
         flyway.migrate();
     }
+
+    public void existeUnUnicoGrupo() {
+
+        estaVacia();
+        var populator = new ResourceDatabasePopulator();
+        populator.addScript(resourceLoader.getResource("classpath:data/existeUnUnicoGrupo.sql"));
+        populator.execute(dataSource);
+    }
 }
