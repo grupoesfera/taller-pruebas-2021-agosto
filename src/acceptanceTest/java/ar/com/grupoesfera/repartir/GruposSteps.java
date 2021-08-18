@@ -13,7 +13,7 @@ import java.util.List;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static org.assertj.core.api.Assertions.*;
 
-public class CrearGruposSteps extends CucumberSteps  {
+public class GruposSteps extends CucumberSteps  {
 
     @Given("no existe ningún grupo")
     public void noExisteNingunGrupo() {
@@ -89,6 +89,54 @@ public class CrearGruposSteps extends CucumberSteps  {
     @Given("existe un grupo")
     public void existeUnGrupo() {
 
-        this.baseDeDatos.existeUnUnicoGrupo();
+        baseDeDatos.existeUnUnicoGrupo();
+    }
+
+    @Given("existe el grupo #{int} {string} sin gastos")
+    public void existeElGrupoSinGastos(int idGrupo, String nombre) {
+
+        baseDeDatos.tieneElGrupoSinGastos(idGrupo, nombre);
+    }
+
+    @When("el usuario selecciona agregar gasto al grupo #{int}")
+    public void elUsuarioSeleccionaAgregarGastoAlGrupo(int idGrupo) {
+
+        var agregarGastoButton = driver.findElement(By.id("agregarGastoGruposButton-" + idGrupo));
+        agregarGastoButton.click();
+    }
+
+    @And("completa con el monto de $ {string}")
+    public void completaConElMontoDe(String monto) {
+
+        var montoInput = driver.findElement(By.id("montoGastoNuevoInput"));
+        montoInput.clear();
+        montoInput.sendKeys(monto);
+    }
+
+    @And("guarda el gasto")
+    public void guardaElGasto() {
+
+        var agregarGastoButton = driver.findElement(By.id("guardarGastoNuevoButton"));
+        agregarGastoButton.click();
+    }
+
+    @Then("ve la confirmación {string}")
+    public void veLaConfirmación(String mensaje) {
+
+        var wait = new WebDriverWait(driver, 2);
+        var mensajesToast = wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
+        assertThat(mensajesToast.getText())
+                .contains("Éxito")
+                .contains(mensaje);
+    }
+
+    @And("se actualiza el total del grupo #{int} a {string}")
+    public void seActualizaElTotalDelGrupoA$(int idGrupo, String monto) {
+
+        var grupoTR = driver.findElements(By.cssSelector("app-grupos table tr"));
+
+        var campoTDs = grupoTR.get(1).findElements(By.tagName("td"));
+        assertThat(campoTDs.get(0).getText()).isNotEmpty();
+        assertThat(campoTDs.get(2).getText()).isEqualTo(monto);
     }
 }
