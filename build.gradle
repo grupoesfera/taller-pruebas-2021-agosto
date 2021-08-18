@@ -42,6 +42,7 @@ dependencies {
 	acceptanceTestImplementation 'io.cucumber:cucumber-spring:6.10.4'
 	acceptanceTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	acceptanceTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	acceptanceTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 
 	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'

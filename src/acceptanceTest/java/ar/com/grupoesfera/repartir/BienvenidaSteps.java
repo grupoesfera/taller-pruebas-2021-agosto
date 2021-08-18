@@ -1,17 +1,66 @@
 package ar.com.grupoesfera.repartir;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class BienvenidaSteps extends CucumberSteps {
 
-    @When("el usuario accede a la aplicación")
+    @Then("el usuario accede a la aplicación")
     public void elUsuarioAccedeALaAplicacion() {
 
+        this.driver.navigate().to(url("/"));
     }
 
-    @Then("muestra el mensaje de bienvenida")
-    public void muestraElMensajeDeBienvenida() {
 
+    @Then("se muestra el mensaje de bienvenida")
+    public void seMuestraElMensajeDeBienvenida() {
+
+        var bienvenidaDialog = driver.findElement(By.tagName("p-dialog"));
+
+        var contenido = bienvenidaDialog.getText();
+        assertThat(contenido).contains("Vamos a ...");
+        assertThat(contenido).contains("Repartir");
     }
+
+    @Given("que el usuario accedió a la aplicación")
+    public void queElUsuarioAccedioALaAplicacion() {
+
+        this.driver.navigate().to(url("/"));
+    }
+
+    @When("decidió iniciar")
+    public void decidioIniciar() {
+
+        var iniciarButton = driver.findElement(By.id("iniciarBienvenidaButton"));
+        iniciarButton.click();
+
+        var crearGruposButton = driver.findElement(By.cssSelector("#crearGruposButton button"));
+        crearGruposButton.click();
+    }
+
+    @Then("puede empezar a usarla")
+    public void puedeEmpezarAUsarla() {
+
+        var nuegoGrupoDialog = driver.findElement(By.cssSelector("app-grupo-nuevo"));
+
+        assertThat(nuegoGrupoDialog.isDisplayed())
+                .as("Dialogo de Nuevo Grupo visible")
+                .isTrue();
+        assertThat(nuegoGrupoDialog.getText())
+                .as("Dialogo de Nuebo Grupo con titulo")
+                .contains("Nuevo Grupo");
+    }
+
+    @Before
+    public void prepararBaseDeDatos() {
+
+        baseDeDatos.estaVacia();
+    }
+
 }
